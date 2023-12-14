@@ -31,9 +31,9 @@ const FeedbackWorkflow = DefineWorkflow({
 const inputForm = FeedbackWorkflow.addStep(
   Schema.slack.functions.OpenForm,
   {
-    title: "Send a greeting",
+    title: "Send Feedback",
     interactivity: FeedbackWorkflow.inputs.interactivity,
-    submit_label: "Send greeting",
+    submit_label: "Send Feedback",
     fields: {
       elements: [{
         name: "user",
@@ -51,7 +51,7 @@ const inputForm = FeedbackWorkflow.addStep(
   },
 );
 
-const greetingFunctionStep = FeedbackWorkflow.addStep(
+const feedbackFunctionStep = FeedbackWorkflow.addStep(
   FeedbackFunctionDefinition,
   {
     user: inputForm.outputs.fields.user,
@@ -62,7 +62,7 @@ const greetingFunctionStep = FeedbackWorkflow.addStep(
 FeedbackWorkflow.addStep(
   Schema.slack.functions.SendDm, {
   user_id: inputForm.outputs.fields.user,
-  message: greetingFunctionStep.outputs.feedback,
+  message: feedbackFunctionStep.outputs.feedback,
 });
 
 export default FeedbackWorkflow;
